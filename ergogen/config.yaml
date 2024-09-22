@@ -1,0 +1,197 @@
+meta:
+  engine: 4.1.0 # Min Ergogen version for KiCad 8 footprints
+units:
+  $default_width: 'cx-0.5'
+  $default_height: 'cy-0.5'
+  # Proxy Spacing Variables
+  kx: cx # 18mm Choc X spacing
+  ky: cy # 17mm Choc Y spacing
+  # Padding Variables
+  px: kx + 4
+  py: ky + 4
+points:
+  zones:
+    matrix:
+      # Fix placement on KiCAD sheet.
+      anchor:
+        shift: [150, -150]
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        outer:
+          key:
+            splay: 8
+            shift: [-1, 0]
+        pinky:
+          key:
+            splay: -4
+            shift: [-0.5, 0]
+        ring:
+          key:
+            stagger: 11.5
+            splay: -4
+        middle:
+          key:
+            stagger: 5
+        index:
+          key:
+            stagger: -5
+        inner:
+          key:
+            stagger: -2
+      rows:
+        bottom:
+        home:
+        top:
+    thumbs:
+      key:
+        padding: 1ky
+        spread: 1kx
+      anchor:
+        ref: matrix_index_bottom
+        shift: [2, -1.5ky]
+      columns:
+        inner:
+          key:
+            rotate: 5
+            shift: [-5, 0]
+        mid:
+          key:
+            rotate: -5
+        outer:
+          key:
+            rotate: -18
+            shift: [5, -5]
+      rows:
+        cluster:
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [px, py]
+  keys:
+    - what: rectangle
+      where: true
+      bound: false
+      size: [kx-0.5,ky-0.5]
+  board:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        #- ref: thumbs_outer_cluster
+        #  shift: [0.5px, 0.5py]
+        - ref: thumbs_outer_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_mid_cluster
+          shift: [0.45px, -0.5py]
+        - ref: thumbs_inner_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_inner_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_outer_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_outer_bottom
+          shift: [-0.55px, -0.5py]
+        - ref: matrix_outer_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_outer_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_pinky_top
+          shift: [0.5px, 0.55py]
+        - ref: matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [0.3px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [1.9px, 0.5py]
+        - ref: matrix_inner_bottom
+          shift: [1.9px, -1py]
+  combo:
+    - name: board
+    - operation: subtract
+      name: keys
+pcbs:
+  scorn:
+    template: kicad8 # Required, since footprints are KiCad 8 only
+    outlines:
+      main:
+        outline: board
+    footprints:
+      choc_hotswap:
+        what: choc
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      promicro:
+        what: promicro
+        params:
+          orientation: "down"
+        where:
+          ref: matrix_inner_top
+          shift: [31, -9]
+          rotate: -90
+      oled:
+        what: oled
+        params:
+          side: 'F'
+          SDA: P2
+          SCL: P3
+        where:
+          ref: matrix_inner_top
+          shift: [25, -29]
+          rotate: 90
+      trrs:
+        what: trrs
+        params:
+          reverse: true
+          symmetric: true
+          A: GND
+          B: GND
+          C: P9
+          D: VCC
+        where:
+          ref: matrix_inner_bottom
+          shift: [38.5, -7]
+          rotate: -90
+      reset:
+        what: button
+        params:
+          from: GND
+          to: RST
+        where:
+          ref: matrix_inner_bottom
+          shift: [38, 2.5]
+          rotate: 90        
+
