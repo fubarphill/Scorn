@@ -17,9 +17,7 @@ You must also include the footprints submodule from ceoloide. Please clone with 
 
 * [foostan](https://github.com/foostan/crkbd) - for the awesome Corne (Crkbd)
 * [beekeeb](https://github.com/beekeeb/piantor) - for the Piantor, which made me realise I need a bigger stagger for my pinkies
-* The [ergogen](https://github.com/ergogen/ergogen) team - for the amazing tool
+* The [Ergogen](https://github.com/ergogen/ergogen) team - for the amazing tool
 * [ceoloide](https://github.com/ceoloide) - for the extra ergogen footprints
-
-
-[GitHub Pages](https://pages.github.com/
+* [FlatFootFox](https://flatfootfox.com/ergogen-part1-units-points/) - for the best Ergogen guide I've seen
 
