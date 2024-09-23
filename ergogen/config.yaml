@@ -1,5 +1,8 @@
 meta:
   engine: 4.1.0 # Min Ergogen version for KiCad 8 footprints
+  name: Scorn
+  author: fubarphill
+  url: https://github.com/fubarphill/Scorn
 units:
   $default_width: 'cx-0.5'
   $default_height: 'cy-0.5'
@@ -153,7 +156,8 @@ pcbs:
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
-          shift: [0, -5]
+          shift: [5, 0]
+          rotate: 90
       promicro:
         what: promicro
         params:
