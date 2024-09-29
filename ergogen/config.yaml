@@ -12,6 +12,27 @@ units:
   # Padding Variables
   px: kx + 4
   py: ky + 4
+  # Additional variables for choc v1 switches
+  ks: 19 # horizontal space between columns (default: 19)
+  kp: 19 # vertical padding between keys (default: 19)
+  kcow: 13.8 # key cutout hole width
+  kcoh: 13.8 # key cutout hole height
+  keycw: 17.5 # keycap width
+  keych: 16.5 # keycap height
+  led_pos_x: 0 # Led X position relative to the switch center
+  led_pos_y: 4.7 # Led Y position relative to the switch center
+  led_rotation: 0 # Led rotation
+  vertical_diode_shift: 1.5 # How much to shift to avoid overlap
+  horizontal_diode_shift: -0.5 kcow - 1
+  diode_rotation: -180 # Diode rotation
+  switch_rotation: 180 # Hotswap south, led north
+  # Mounting measurements
+  screw_radius: 1.1 # M2 screws
+  screw_diameter: screw_radius * 2
+  screw_head_radius: 2.05
+  screw_head_diameter: screw_head_radius * 2
+  spacer_radius: 2.15 # M2 standoffs
+  spacer_diameter: spacer_radius * 2
 points:
   zones:
     matrix:
@@ -21,36 +42,111 @@ points:
       key:
         padding: 1ky
         spread: 1kx
+        tags:
+          - key
+          - matrix_key
       columns:
         outer:
           key:
             splay: 8
             shift: [-1, 0]
+            column_net: C0
+          rows:
+            top.key:
+              led_prev: LED_5
+              led_next: LED_6
+            home.key:
+              led_prev: LED_6
+              led_next: LED_7
+            bottom.key:
+              led_prev: LED_17
+              led_next: LED_18
         pinky:
           key:
             splay: -4
             shift: [-0.5, 0]
+            column_net: C1
+          rows:
+            top.key:
+              led_prev: LED_4
+              led_next: LED_5
+            home.key:
+              led_prev: LED_7
+              led_next: LED_8
+            bottom.key:
+              led_prev: LED_16
+              led_next: LED_17
         ring:
           key:
             stagger: 11.5
             splay: -4
+            column_net: C2
+          rows:
+            top.key:
+              led_prev: LED_3
+              led_next: LED_4
+            home.key:
+              led_prev: LED_8
+              led_next: LED_9
+            bottom.key:
+              led_prev: LED_15
+              led_next: LED_16
         middle:
           key:
             stagger: 5
+            column_net: C3
+          rows:
+            top.key:
+              led_prev: LED_2
+              led_next: LED_3
+            home.key:
+              led_prev: LED_9
+              led_next: LED_10
+            bottom.key:
+              led_prev: LED_14
+              led_next: LED_15
         index:
           key:
             stagger: -5
+            column_net: C4
+          rows:
+            top.key:
+              led_prev: LED_1
+              led_next: LED_2
+            home.key:
+              led_prev: LED_10
+              led_next: LED_11
+            bottom.key:
+              led_prev: LED_13
+              led_next: LED_14
         inner:
           key:
             stagger: -2
+            column_net: C5
+          rows:
+            top.key:
+              led_prev: LED
+              led_next: LED_1
+            home.key:
+              led_prev: LED_11
+              led_next: LED_12
+            bottom.key:
+              led_prev: LED_12
+              led_next: LED_13
       rows:
         bottom:
+          row_net: R2
         home:
+          row_net: R1
         top:
+          row_net: R0
     thumbs:
       key:
         padding: 1ky
         spread: 1kx
+        tags:
+          - key
+          - thumb_key
       anchor:
         ref: matrix_index_bottom
         shift: [2, -1.5ky]
@@ -59,15 +155,72 @@ points:
           key:
             rotate: 5
             shift: [-5, 0]
+            column_net: C3
+          rows:
+            cluster.key:
+              led_prev: LED_18
+              led_next: LED_19
         mid:
           key:
             rotate: -5
+            column_net: C4
+          rows:
+            cluster.key:
+              led_prev: LED_19
+              led_next: LED_20
         outer:
           key:
             rotate: -18
             shift: [5, -5]
+            column_net: C5
+          rows:
+            cluster.key:
+              led_prev: LED_20
+              led_next: LED_21
       rows:
         cluster:
+          row_net: R3
+    #Mounting helpers
+    pcb_mounting_hole_topleft:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: matrix_outer_top
+            shift: [11, -9]
+    pcb_mounting_hole_bottomleft:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: matrix_outer_bottom
+            shift: [9.5, 8]
+    pcb_mounting_hole_topright:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: matrix_inner_top
+            shift: [16, 5]                    
+    pcb_mounting_hole_bottomright:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: thumbs_outer_cluster
+            shift: [9, 11] 
+    pcb_mounting_hole_bottom:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: thumbs_inner_cluster
+            shift: [-15, -2] 
 outlines:
   raw:
     - what: rectangle
@@ -140,62 +293,209 @@ pcbs:
       main:
         outline: board
     footprints:
-      choc_hotswap:
-        what: choc
-        where: true
+      choc_v1_hotswap:
+        what: ceoloide/switch_choc_v1_v2
+        where: /key/
         params:
-          keycaps: true
-          reverse: true
+          designator: SW
+          side: B
+          reversible: true
           hotswap: true
+          solder: false
+          outer_pad_width_front: 2.6
+          outer_pad_width_back: 2.6
+          include_corner_marks: true
+          include_choc_v1_led_cutout_marks: true
+          choc_v1_support: true
+          include_stabilizer_pad: false
+          allow_soldermask_bridges: true
           from: "{{column_net}}"
           to: "{{colrow}}"
-      diode:
-        what: diode
-        where: true
+        adjust:
+          rotate: 180 # Hotswap south, led north
+      diode_f:
+        what: ceoloide/diode_tht_sod123
+        where: /key/
         params:
+          designator: D
+          side: F
+          reversible: false
+          include_tht: false
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
-          shift: [5, 0]
-          rotate: 90
-      promicro:
-        what: promicro
+          shift: [-1 * horizontal_diode_shift,vertical_diode_shift]
+          rotate: 90 + diode_rotation
+      diode_b:
+        what: ceoloide/diode_tht_sod123
+        where: /key/
         params:
-          orientation: "down"
+          designator: D
+          side: B
+          reversible: false
+          include_tht: false
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [horizontal_diode_shift,vertical_diode_shift]
+          rotate: 90 + diode_rotation
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        params:
+          designator: MCU
+          side: F
+          reversible: true
+          reverse_mount: true
+          include_traces: true
+          include_extra_pins: false
+          invert_jumpers_position: false
+          only_required_jumpers: false
+          use_rectangular_jumpers: false
+          via_size: 0.8 # JLCPC min is 0.56 for 1-2 layer boards, KiCad defaults to 0.8
+          via_drill: 0.4 # JLCPC min is 0.3 for 1-2 layer boards, KiCad defaults to 0.4
+          show_instructions: true
+          show_silk_labels: true
+          show_silk_labels_on_both_sides: true
+          show_via_labels: true
+          RAW: RAW
+          GND: GND
+          RST: RST
+          VCC: VCC
+          P21: C0
+          P20: C1
+          P19: C2
+          P18: C3
+          P15: C4
+          P14: C5
+          P16: P16
+          P10: P10
+          P0: P0
+          P1: LED
+          P2: SDA
+          P3: SCL
+          P4: CS
+          P5: R0
+          P6: R1
+          P7: R2
+          P8: R3
+          P9: DAT
         where:
           ref: matrix_inner_top
-          shift: [31, -9]
-          rotate: -90
+          shift: [31, -7.5]
       oled:
-        what: oled
+        what: ceoloide/display_ssd1306
         params:
-          side: 'F'
-          SDA: P2
-          SCL: P3
+          designator: DISP
+          side: F
+          reversible: true
+          include_traces: true
+          gnd_trace_width: 0.25
+          signal_trace_width: 0.25
+          invert_jumpers_position: false
+          include_labels: true
+          SDA: SDA
+          SCL: SCL
+          VCC: VCC
+          GND: GND
         where:
           ref: matrix_inner_top
-          shift: [25, -29]
-          rotate: 90
+          shift: [31, -12]
       trrs:
-        what: trrs
+        what: ceoloide/trrs_pj320a
         params:
-          reverse: true
+          designator: TRRS
+          side: F
+          reversible: true
           symmetric: true
-          A: GND
-          B: GND
-          C: P9
-          D: VCC
+          TP: VCC
+          R2: DAT
+          SL: GND
         where:
           ref: matrix_inner_bottom
-          shift: [38.5, -7]
+          shift: [40, -8]
           rotate: -90
       reset:
-        what: button
+        what: ceoloide/reset_switch_tht_top
         params:
+          designator: RST
+          reversible: true
+          include_silkscreen: true
           from: GND
           to: RST
         where:
           ref: matrix_inner_bottom
-          shift: [38, 2.5]
-          rotate: 90        
+          shift: [39, 1]
+          rotate: 90
+      per_key_leds:
+        what: ceoloide/led_sk6812mini-e
+        where: /key/
+        params:
+          P1: VCC
+          P2: "{{key.led_next}}" #DOUT
+          P3: GND
+          P4: "{{key.led_prev}}" #DIN
+          reversible: true
+          reverse_mount: true
+          include_traces_vias: true
+          include_keepout: false
+          include_courtyard: false
+        adjust:
+          shift: [led_pos_x, led_pos_y]
+          rotate: led_rotation
+      jlcpcb_order_no:
+        what: ceoloide/utility_text
+        where: matrix_index_bottom
+        params:
+          text: JLCJLCJLCJLC
+          reversible: false
+        adjust:
+          shift: [8, -13.5]
+      spacer_holes:
+        what: ceoloide/mounting_hole_npth
+        where: /pcb_mounting_hole/
+        params:
+          hole_size: spacer_diameter
+          hole_drill: spacer_diameter
+
+
+      # spacer_hole_topleft:
+      #   what: ceoloide/mounting_hole_npth
+      #   params:
+      #     hole_size: spacer_diameter
+      #     hole_drill: spacer_diameter
+      #   where:
+      #     ref: matrix_outer_top
+      #     shift: [11, -9]
+      # spacer_hole_bottomleft:
+      #   what: ceoloide/mounting_hole_npth
+      #   params:
+      #     hole_size: spacer_diameter
+      #     hole_drill: spacer_diameter
+      #   where:
+      #     ref: matrix_outer_bottom
+      #     shift: [9.5, 8] 
+      # spacer_hole_topright:
+      #   what: ceoloide/mounting_hole_npth
+      #   params:
+      #     hole_size: spacer_diameter
+      #     hole_drill: spacer_diameter
+      #   where:
+      #     ref: matrix_inner_top
+      #     shift: [16, 5]
+      # spacer_hole_bottomright:
+      #   what: ceoloide/mounting_hole_npth
+      #   params:
+      #     hole_size: spacer_diameter
+      #     hole_drill: spacer_diameter
+      #   where:
+      #     ref: thumbs_outer_cluster
+      #     shift: [9, 11]
+      # spacer_hole_bottomcentre:
+      #   what: ceoloide/mounting_hole_npth
+      #   params:
+      #     hole_size: spacer_diameter
+      #     hole_drill: spacer_diameter
+      #   where:
+      #     ref: thumbs_inner_cluster
+      #     shift: [-15, -2]
 
