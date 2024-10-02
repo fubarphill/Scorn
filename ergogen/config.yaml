@@ -48,8 +48,8 @@ points:
       columns:
         outer:
           key:
-            splay: 8
-            shift: [-1, 0]
+            # splay: 8 #OG
+            splay: 12
             column_net: C0
           rows:
             top.key:
@@ -63,8 +63,6 @@ points:
               led_next: LED_18
         pinky:
           key:
-            splay: -4
-            shift: [-0.5, 0]
             column_net: C1
           rows:
             top.key:
@@ -78,8 +76,10 @@ points:
               led_next: LED_17
         ring:
           key:
-            stagger: 11.5
-            splay: -4
+            # stagger: 11.5 #OG
+            # splay: -8 #OG
+            stagger: 10
+            splay: -6            
             column_net: C2
           rows:
             top.key:
@@ -93,7 +93,9 @@ points:
               led_next: LED_16
         middle:
           key:
-            stagger: 5
+            # stagger: 5 #OG
+            stagger: 7
+            splay: -3            
             column_net: C3
           rows:
             top.key:
@@ -107,7 +109,9 @@ points:
               led_next: LED_15
         index:
           key:
-            stagger: -5
+            # stagger: -5 #OG
+            stagger: -7
+            splay: -3
             column_net: C4
           rows:
             top.key:
@@ -188,7 +192,7 @@ points:
           - screw
       anchor:
           - ref: matrix_outer_top
-            shift: [11, -9]
+            shift: [9, -8.5]
     pcb_mounting_hole_bottomleft:
       key:
         tags:
@@ -196,7 +200,7 @@ points:
           - screw
       anchor:
           - ref: matrix_outer_bottom
-            shift: [9.5, 8]
+            shift: [9, 8.5]
     pcb_mounting_hole_topright:
       key:
         tags:
@@ -228,7 +232,7 @@ outlines:
       size: [px, py]
   keys:
     - what: rectangle
-      where: true
+      where: /key/
       bound: false
       size: [kx-0.5,ky-0.5]
   board:
@@ -236,8 +240,6 @@ outlines:
       operation: stack
       fillet: 2
       points:
-        #- ref: thumbs_outer_cluster
-        #  shift: [0.5px, 0.5py]
         - ref: thumbs_outer_cluster
           shift: [0.5px, -0.5py]
         - ref: thumbs_mid_cluster
@@ -286,6 +288,85 @@ outlines:
     - name: board
     - operation: subtract
       name: keys
+  _switch_cutouts:
+    - what: rectangle
+      where: /key/
+      size: [kcow, kcoh]
+  _screwholes:
+    - what: circle
+      where: /pcb_mounting_hole/
+      radius: screw_radius
+  _switchplate_base:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        - ref: thumbs_outer_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_mid_cluster
+          shift: [0.45px, -0.5py]
+        - ref: thumbs_inner_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_inner_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_outer_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_outer_bottom
+          shift: [-0.55px, -0.5py]
+        - ref: matrix_outer_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_outer_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_pinky_top
+          shift: [0.5px, 0.55py]
+        - ref: matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [0.3px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.95px, 0.5py]
+        - ref: matrix_inner_bottom
+          shift: [0.95px, -0.7py]
+        - ref: matrix_inner_bottom
+          shift: [1.9px, -0.7py]
+        - ref: matrix_inner_bottom
+          shift: [1.9px, -1py]
+  _switchplate_outline:
+    - what: outline
+      name: _switchplate_base
+    - what: outline
+      name: _switch_cutouts
+      operation: subtract
+  switchplate:
+    - what: outline
+      name: _switchplate_outline
+    - what: outline
+      name: _screwholes
+      operation: subtract
+  backplate:
+    - what: outline
+      name: board
+    - what: outline
+      name: _screwholes
+      operation: subtract
 pcbs:
   scorn:
     template: kicad8 # Required, since footprints are KiCad 8 only
@@ -456,46 +537,10 @@ pcbs:
         params:
           hole_size: spacer_diameter
           hole_drill: spacer_diameter
-
-
-      # spacer_hole_topleft:
-      #   what: ceoloide/mounting_hole_npth
-      #   params:
-      #     hole_size: spacer_diameter
-      #     hole_drill: spacer_diameter
-      #   where:
-      #     ref: matrix_outer_top
-      #     shift: [11, -9]
-      # spacer_hole_bottomleft:
-      #   what: ceoloide/mounting_hole_npth
-      #   params:
-      #     hole_size: spacer_diameter
-      #     hole_drill: spacer_diameter
-      #   where:
-      #     ref: matrix_outer_bottom
-      #     shift: [9.5, 8] 
-      # spacer_hole_topright:
-      #   what: ceoloide/mounting_hole_npth
-      #   params:
-      #     hole_size: spacer_diameter
-      #     hole_drill: spacer_diameter
-      #   where:
-      #     ref: matrix_inner_top
-      #     shift: [16, 5]
-      # spacer_hole_bottomright:
-      #   what: ceoloide/mounting_hole_npth
-      #   params:
-      #     hole_size: spacer_diameter
-      #     hole_drill: spacer_diameter
-      #   where:
-      #     ref: thumbs_outer_cluster
-      #     shift: [9, 11]
-      # spacer_hole_bottomcentre:
-      #   what: ceoloide/mounting_hole_npth
-      #   params:
-      #     hole_size: spacer_diameter
-      #     hole_drill: spacer_diameter
-      #   where:
-      #     ref: thumbs_inner_cluster
-      #     shift: [-15, -2]
-
+cases:
+  switchplate:
+    - name: switchplate
+      extrude: 1.2
+  backplate:
+    - name: backplate
+      extrude: 1.6
