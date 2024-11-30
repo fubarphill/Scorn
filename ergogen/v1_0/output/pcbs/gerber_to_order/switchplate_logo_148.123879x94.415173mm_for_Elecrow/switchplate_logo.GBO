@@ -1,0 +1,22 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,8.0.5*%
+%TF.CreationDate,2024-10-14T20:53:26+01:00*%
+%TF.ProjectId,switchplate_logo,73776974-6368-4706-9c61-74655f6c6f67,v1.0.0*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Legend,Bot*%
+%TF.FilePolarity,Positive*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 8.0.5) date 2024-10-14 20:53:26*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%ADD10C,0.350000*%
+G04 APERTURE END LIST*
+D10*
+X153501580Y-123186031D03*
+X157036079Y-139814540D03*
+X252645575Y-92938897D03*
+X273604271Y-152758428D03*
+X200876966Y-158738623D03*
+M02*

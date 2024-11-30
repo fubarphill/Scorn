@@ -10,8 +10,8 @@
   )
   (paper "A3")
   (title_block
-    (title "scorn")
-    (date "2024-10-02")
+    (title "scorn_choc")
+    (date "2024-10-05")
     (rev "v1.0.0")
     (company "fubarphill")
   )

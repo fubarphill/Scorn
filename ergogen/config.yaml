@@ -368,7 +368,7 @@ outlines:
       name: _screwholes
       operation: subtract
 pcbs:
-  scorn:
+  scorn_choc:
     template: kicad8 # Required, since footprints are KiCad 8 only
     outlines:
       main:
@@ -537,8 +537,49 @@ pcbs:
         params:
           hole_size: spacer_diameter
           hole_drill: spacer_diameter
-cases:
   switchplate:
+    template: kicad8 # Required, since footprints are KiCad 8 only
+    outlines:
+      main:
+        outline: _switchplate_outline
+    footprints:
+      screw_holes:
+        what: ceoloide/mounting_hole_npth
+        where: /pcb_mounting_hole/
+        params:
+          hole_size: screw_diameter
+          hole_drill: screw_diameter
+      jlcpcb_order_no:
+        what: ceoloide/utility_text
+        where: matrix_index_bottom
+        params:
+          text: JLCJLCJLCJLC
+          reversible: false
+        adjust:
+          shift: [8, -13.5]
+  backplate:
+    template: kicad8 # Required, since footprints are KiCad 8 only
+    outlines:
+      main:
+        outline: board
+    footprints:
+      screw_holes:
+        what: ceoloide/mounting_hole_npth
+        where: /pcb_mounting_hole/
+        params:
+          hole_size: screw_diameter
+          hole_drill: screw_diameter
+      jlcpcb_order_no:
+        what: ceoloide/utility_text
+        where: matrix_outer_home
+        params:
+          text: JLCJLCJLCJLC
+          reversible: false
+        adjust:
+          shift: [-8, 0]
+          rotate: -90          
+cases:
+  switchplate_choc:
     - name: switchplate
       extrude: 1.2
   backplate:

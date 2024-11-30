@@ -1,0 +1,113 @@
+
+(rules PCB scorn_choc_test.dsn
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute off)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 1)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.6)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.6)
+    )
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 200.0 (type kicad))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" default
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    C0 "outer_bottom" "outer_home" "outer_top" C1 "pinky_bottom" "pinky_home" "pinky_top"
+    C2 "ring_bottom" "ring_home" "ring_top" C3 "middle_bottom" "middle_home" "middle_top"
+    C4 "index_bottom" "index_home" "index_top" C5 "inner_bottom" "inner_home" "inner_top"
+    "inner_cluster" "mid_cluster" "outer_cluster" R2 R1 R0 R3 RST
+    P16 P10 LED P0 SDA SCL CS DAT
+    "MCU1_24" "MCU1_1" "MCU1_23" "MCU1_2" "MCU1_22" "MCU1_3" "MCU1_21" "MCU1_4"
+    "MCU1_20" "MCU1_5" "MCU1_19" "MCU1_6" "MCU1_18" "MCU1_7" "MCU1_17" "MCU1_8"
+    "MCU1_16" "MCU1_9" "MCU1_15" "MCU1_10" "MCU1_14" "MCU1_11" "MCU1_13" "MCU1_12"
+    "DISP1_1" "DISP1_2" "DISP1_3" "DISP1_4" "LED_18" "LED_17" "LED_7" "LED_6"
+    "LED_5" "LED_16" "LED_8" "LED_4" "LED_15" "LED_9" "LED_3" "LED_14"
+    "LED_10" "LED_2" "LED_13" "LED_11" "LED_1" "LED_12" "LED_19" "LED_20"
+    "LED_21"
+    (clearance_class default)
+    (via_rule "kicad_default")
+    (rule
+      (width 150.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "pwr_gnd"
+    GND RAW VCC
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
