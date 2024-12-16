@@ -225,6 +225,22 @@ points:
       anchor:
           - ref: thumbs_inner_cluster
             shift: [-15, -2] 
+    pcb_mounting_hole_midright:
+      key:
+        tags:
+          - helper
+          - screw
+      anchor:
+          - ref: matrix_inner_top
+            shift: [16, -45]
+    # pcb_mounting_hole_top:
+    #   key:
+    #     tags:
+    #       - helper
+    #       - screw
+    #   anchor:
+    #       - ref: matrix_middle_top
+    #         shift: [10, 6.5] 
 outlines:
   raw:
     - what: rectangle
@@ -473,7 +489,8 @@ pcbs:
           gnd_trace_width: 0.25
           signal_trace_width: 0.25
           invert_jumpers_position: false
-          include_labels: true
+          include_labels: false
+          invert_labels_position: false
           SDA: SDA
           SCL: SCL
           VCC: VCC
@@ -531,6 +548,164 @@ pcbs:
       #     reversible: false
       #   adjust:
       #     shift: [8, -13.5]
+      spacer_holes:
+        what: ceoloide/mounting_hole_npth
+        where: /pcb_mounting_hole/
+        params:
+          hole_size: spacer_diameter
+          hole_drill: spacer_diameter
+  scorn_choc_wireless:
+    template: kicad8 # Required, since footprints are KiCad 8 only
+    outlines:
+      main:
+        outline: board
+    footprints:
+      choc_v1_hotswap:
+        what: ceoloide/switch_choc_v1_v2
+        where: /key/
+        params:
+          designator: SW
+          side: B
+          reversible: true
+          hotswap: true
+          solder: false
+          outer_pad_width_front: 2.6
+          outer_pad_width_back: 2.6
+          include_corner_marks: true
+          include_choc_v1_led_cutout_marks: false
+          choc_v1_support: true
+          include_stabilizer_pad: false
+          allow_soldermask_bridges: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+        adjust:
+          rotate: 180 # Hotswap south, led north
+      diode_f:
+        what: ceoloide/diode_tht_sod123
+        where: /key/
+        params:
+          designator: D
+          side: F
+          reversible: false
+          include_tht: false
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [-1 * horizontal_diode_shift,vertical_diode_shift]
+          rotate: 90 + diode_rotation
+      diode_b:
+        what: ceoloide/diode_tht_sod123
+        where: /key/
+        params:
+          designator: D
+          side: B
+          reversible: false
+          include_tht: false
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [horizontal_diode_shift,vertical_diode_shift]
+          rotate: 90 + diode_rotation
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        params:
+          designator: MCU
+          side: F
+          reversible: true
+          reverse_mount: true
+          include_traces: true
+          include_extra_pins: false
+          invert_jumpers_position: false
+          only_required_jumpers: false
+          use_rectangular_jumpers: false
+          via_size: 0.8 # JLCPC min is 0.56 for 1-2 layer boards, KiCad defaults to 0.8
+          via_drill: 0.4 # JLCPC min is 0.3 for 1-2 layer boards, KiCad defaults to 0.4
+          show_instructions: true
+          show_silk_labels: true
+          show_silk_labels_on_both_sides: true
+          show_via_labels: true
+          RAW: RAW
+          GND: GND
+          RST: RST
+          VCC: VCC
+          P21: C0
+          P20: C1
+          P19: C2
+          P18: C3
+          P15: C4
+          P14: C5
+          P16: P16
+          P10: P10
+          P0: P0
+          P1: LED
+          P2: MOSI
+          P3: SCK
+          P4: CS
+          P5: R0
+          P6: R1
+          P7: R2
+          P8: R3
+          P9: DAT
+        where:
+          ref: matrix_inner_top
+          shift: [31, -7.5]
+      oled_nview:
+        what: ceoloide/display_nice_view
+        params:
+          designator: DISP
+          side: F
+          reversible: true
+          include_traces: true
+          gnd_trace_width: 0.25
+          signal_trace_width: 0.25
+          invert_jumpers_position: true
+          include_labels: false
+          invert_labels_position: false
+          MOSI: MOSI
+          SCK: SCK
+          VCC: VCC
+          GND: GND
+          CS: CS
+        where:
+          ref: matrix_inner_top
+          shift: [31, -10]
+      reset:
+        what: ceoloide/reset_switch_tht_top
+        params:
+          designator: RST
+          reversible: true
+          include_silkscreen: true
+          from: GND
+          to: RST
+        where:
+          ref: matrix_inner_bottom
+          shift: [39.5, 1.5]
+          rotate: 90
+      pwr_switch:
+        what: ceoloide/power_switch_smd_side
+        params:
+          designator: PWR
+          side: F
+          reversible: true
+          invert_behavior: false
+          include_silkscreen: true
+          from: BAT_P
+          to: RAW
+        where:
+          ref: matrix_inner_bottom
+          shift: [39.5, -9]
+      bat_conn:
+        what: ceoloide/battery_connector_jst_ph_2
+        params:
+          designator: BAT
+          side: F
+          reversible: true
+          BAT_P: BAT_P
+          BAT_N: GND
+        where:
+          ref: matrix_inner_top
+          shift: [26.5, -35]
+          rotate: 90
       spacer_holes:
         what: ceoloide/mounting_hole_npth
         where: /pcb_mounting_hole/

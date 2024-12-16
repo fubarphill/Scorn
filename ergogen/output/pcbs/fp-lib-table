@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "images")(type "KiCad")(uri "/Users/phill/Git/keeb/Scorn/images")(options "")(descr ""))
+)
