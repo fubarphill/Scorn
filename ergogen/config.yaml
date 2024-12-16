@@ -523,14 +523,14 @@ pcbs:
         adjust:
           shift: [led_pos_x, led_pos_y]
           rotate: led_rotation
-      jlcpcb_order_no:
-        what: ceoloide/utility_text
-        where: matrix_index_bottom
-        params:
-          text: JLCJLCJLCJLC
-          reversible: false
-        adjust:
-          shift: [8, -13.5]
+      # jlcpcb_order_no:
+      #   what: ceoloide/utility_text
+      #   where: matrix_index_bottom
+      #   params:
+      #     text: JLCJLCJLCJLC
+      #     reversible: false
+      #   adjust:
+      #     shift: [8, -13.5]
       spacer_holes:
         what: ceoloide/mounting_hole_npth
         where: /pcb_mounting_hole/
@@ -549,14 +549,14 @@ pcbs:
         params:
           hole_size: screw_diameter
           hole_drill: screw_diameter
-      jlcpcb_order_no:
-        what: ceoloide/utility_text
-        where: matrix_index_bottom
-        params:
-          text: JLCJLCJLCJLC
-          reversible: false
-        adjust:
-          shift: [8, -13.5]
+      # jlcpcb_order_no:
+      #   what: ceoloide/utility_text
+      #   where: matrix_index_bottom
+      #   params:
+      #     text: JLCJLCJLCJLC
+      #     reversible: false
+      #   adjust:
+      #     shift: [8, -13.5]
   backplate:
     template: kicad8 # Required, since footprints are KiCad 8 only
     outlines:
@@ -569,15 +569,15 @@ pcbs:
         params:
           hole_size: screw_diameter
           hole_drill: screw_diameter
-      jlcpcb_order_no:
-        what: ceoloide/utility_text
-        where: matrix_outer_home
-        params:
-          text: JLCJLCJLCJLC
-          reversible: false
-        adjust:
-          shift: [-8, 0]
-          rotate: -90          
+      # jlcpcb_order_no:
+      #   what: ceoloide/utility_text
+      #   where: matrix_outer_home
+      #   params:
+      #     text: JLCJLCJLCJLC
+      #     reversible: false
+      #   adjust:
+      #     shift: [-8, 0]
+      #     rotate: -90          
 cases:
   switchplate_choc:
     - name: switchplate
